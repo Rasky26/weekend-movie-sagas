@@ -1,6 +1,12 @@
+// Import the core libraries
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import './MovieList.css'
+
+// Import the used components
+import MovieCard from './MovieCard';
+
+// Import the relative styles
+import styles from './MovieList.module.css'
 
 function MovieList() {
 
@@ -14,15 +20,13 @@ function MovieList() {
     return (
         <main>
             <h1>MovieList</h1>
-            <section className="movies">
-                {movies.map(movie => {
-                    return (
-                        <div key={movie.id} >
-                            <h3>{movie.title}</h3>
-                            <img src={movie.poster} alt={movie.title}/>
-                        </div>
-                    );
-                })}
+            <section className="movies-container">
+                {movies.map(movie => 
+                    <MovieCard
+                        key={movie.id}
+                        movie={movie}
+                    />
+                )}
             </section>
         </main>
 
