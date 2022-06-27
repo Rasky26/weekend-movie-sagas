@@ -40,7 +40,7 @@
   min-width: 325px;
   margin: 0px 0.25rem;
   padding: 2rem;
-  border-radius: 8px 36px;
+  border-radius: 8px 36px 16px;
   background-color: var(--clr-card-background);
   transition: 0.26s ease-in-out;
 }

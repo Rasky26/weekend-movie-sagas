@@ -5,23 +5,18 @@ import { useDispatch, useSelector } from 'react-redux';
 // Import the used components
 import MovieCard from './MovieCard';
 
+// Import the relative styles
+import styles from './MovieList.module.css'
 
-// Component that builds the movie list slider based on the supplied category
-export default function MovieList({ genre }) {
+function MovieList() {
 
-    // Get the movies list from the database
+    const dispatch = useDispatch();
     const movies = useSelector(store => store.movies);
 
-    // Initialize the moviesList
-    let moviesList
-    // Filter the movies list against the genre filter
-    if (genre === 'All Movies') {
-        moviesList = movies
-    }
-    else {
-        moviesList = movies.filter(movie => movie.genres.includes(genre))
-    }
-        
+    useEffect(() => {
+        dispatch({ type: 'FETCH_MOVIES' });
+    }, []);
+
     // Listener for clicking the handle buttons
     const onClickHandle = (event) => {
         // Initialize the 'handle' variable
@@ -66,8 +61,8 @@ export default function MovieList({ genre }) {
 
 
     return (
-        <section>
-            <h3>{genre === 'All Movies' ? 'All Movies' : genre}</h3>
+        <main>
+            <h3>All Movies</h3>
             <div className='movie-container'>
 
                 <button
@@ -78,7 +73,7 @@ export default function MovieList({ genre }) {
                 </button>
 
                 <div className='slider'>
-                    {moviesList.map(movie => 
+                    {movies.map(movie => 
                         <MovieCard
                             key={movie.id}
                             movie={movie}
@@ -93,7 +88,9 @@ export default function MovieList({ genre }) {
                     &#8250;
                 </button>
             </div>
-        </section>
+        </main>
 
     );
 }
+
+export default MovieList;

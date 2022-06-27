@@ -5,6 +5,7 @@ import {HashRouter as Router, Route} from 'react-router-dom';
 import Header from '../Header/Header';
 import MovieList from '../MovieList/MovieList'
 import ViewMovieDetails from '../ViewMovieDetails/ViewMovieDetails';
+import MovieSlider from '../MovieList/MovieList';
 
 // Import the stylesheet
 import './App.css';
@@ -19,7 +20,9 @@ function App() {
 
       <Router>        
         <Route path="/" exact>
-          <MovieList />
+          <MovieSlider genre={'All Movies'} />
+          <MovieSlider genre={'Comedy'} />
+          <MovieSlider genre={'Adventure'} />
         </Route>
         
         {/* Details page */}
