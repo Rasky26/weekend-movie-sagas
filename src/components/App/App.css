@@ -1,28 +1,87 @@
 :root {
- --clr-main: green;
+  /* Set the core color pallete */
+  --clr-main: green;
+  --clr-card-background: hsl(0, 0%, 94%);
+  --clr-card-background-hover: hsl(0, 0%, 86%);
+  --clr-light-gray-transparent: hsla(0, 0%, 74%, 0.46);
+  --clr-gray-transparent: hsla(0, 0%, 44%, 0.86);
+
+  /* Set default variables */
+  --slider-padding: 5rem;
+  --slider-index: 0;
 }
 
 * {
   font-family: 'Kanit', Arial, Helvetica, sans-serif;
 }
 
-.container {
-  width: 100%;
+.movie-container {
+  display: flex; 
+  justify-content: center;
+  overflow: hidden;
 }
 
 .slider {
   display: flex;
-  width: 100%;
-  transform: translateX(0%);
+  flex-grow: 1;
+  width: calc(100% - (2 * var(--slider-padding)));
+  /* This is the CORE for our slider function! */
+  /* Allows for the slider to move between movie elements! */
+  transform: translateX(calc(var(--slider-index) * -100%));
+  transition: 0.26s ease-in-out;
 }
 
 .movie-card {
-  min-width: 350px;
-  outline: 1px solid red;
+  display: flex;
+  flex: 0 0 24%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 325px;
+  margin: 0px 0.25rem;
+  padding: 2rem;
+  border-radius: 8px 36px;
+  background-color: var(--clr-card-background);
+  transition: 0.26s ease-in-out;
 }
 
-.slider .movie-card > img {
+.movie-card:hover,
+.movie-card:focus {
+  background-color: var(--clr-card-background-hover);
+}
+
+.movie-card > img {
   max-width: 300px;
-  /* flex: 0 0 25%; */
-  padding: 2rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0px 0px 15px;
+}
+
+.handle {
+  border: none;
+  flex-grow: 0;
+  width: calc(var(--slider-padding) - 0.25rem);
+  background-color: var(--clr-light-gray-transparent);
+  z-index: 1;
+  margin: 0.25rem 0px;
+  font-size: 6rem;
+  text-align: center;
+  color: white;
+  transition: 0.16s linear;
+}
+
+.handle:hover,
+.handle:focus {
+  background-color: var(--clr-gray-transparent);
+  font-size: 7.5rem;
+}
+
+.left-handle {
+  border-top-right-radius: 24px;
+  border-bottom-right-radius: 24px;
+}
+
+.right-handle {
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
 }
