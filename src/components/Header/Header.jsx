@@ -4,7 +4,7 @@ export default function Header() {
 
     // Build the DOM elements
     return (
-        <header>
+        <header className="App-header">
             <h1>The Movies Saga!</h1>
         </header>
     )

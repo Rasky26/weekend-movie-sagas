@@ -5,32 +5,35 @@ import { useDispatch, useSelector } from 'react-redux';
 // Import the used components
 import MovieCard from './MovieCard';
 
-// Import the relative styles
-import styles from './MovieList.module.css'
 
-function MovieList() {
+// Component that builds the movie list slider based on the supplied category
+export default function MovieList({ genre }) {
 
-    const dispatch = useDispatch();
+    // Get the movies list from the database
     const movies = useSelector(store => store.movies);
 
-    useEffect(() => {
-        dispatch({ type: 'FETCH_MOVIES' });
-    }, []);
-
+    // Initialize the moviesList
+    let moviesList
+    // Filter the movies list against the genre filter
+    if (genre === 'All Movies') {
+        moviesList = movies
+    }
+    else {
+        moviesList = movies.filter(movie => movie.genres.includes(genre))
+    }
+        
     // Listener for clicking the handle buttons
     const onClickHandle = (event) => {
         // Initialize the 'handle' variable
         let handle
         
-        // Get the handle content
-        console.log(event.target.classList) //to change style via css
+        // Get the handle content if the matching CSS property was found
         if (event.target.matches(".handle"))  {
             handle = event.target
-            console.log("Yup")
         }
+        // Otherwise, I clicked on the text and need to get the parent (closest) element
         else {
             handle = event.target.closest(".handle")
-            console.log("Yupp")
         }
 
         // Check that a valid ".handle" was clicked on
@@ -63,8 +66,17 @@ function MovieList() {
 
 
     return (
-        <main>
-            <h1>MovieList</h1>
+        <section>
+            <div className='header'>
+                <h3 className='title'>{genre === 'All Movies' ? 'All Movies' : genre}</h3>
+                <div className='progress-bar'>
+                    <div className="progress-item"></div>
+                    <div className="progress-item active"></div>
+                    <div className="progress-item"></div>
+                    <div className="progress-item"></div>
+                </div>
+            </div>
+
             <div className='movie-container'>
 
                 <button
@@ -75,7 +87,7 @@ function MovieList() {
                 </button>
 
                 <div className='slider'>
-                    {movies.map(movie => 
+                    {moviesList.map(movie => 
                         <MovieCard
                             key={movie.id}
                             movie={movie}
@@ -90,9 +102,7 @@ function MovieList() {
                     &#8250;
                 </button>
             </div>
-        </main>
+        </section>
 
     );
 }
-
-export default MovieList;

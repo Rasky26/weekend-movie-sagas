@@ -1,29 +1,51 @@
 :root {
   /* Set the core color pallete */
-  --clr-main: green;
-  --clr-card-background: hsl(0, 0%, 94%);
-  --clr-card-background-hover: hsl(0, 0%, 86%);
-  --clr-light-gray-transparent: hsla(0, 0%, 74%, 0.46);
+  --clr-main: hsl(0, 0%, 64%);
+  --clr-background: hsl(240, 14%, 82%);
+  --clr-card-background: hsla(0, 0%, 94%, 0.5);
+  --clr-card-background-hover: hsl(0, 10%, 86%);
+  --clr-light-gray-transparent: hsla(0, 0%, 54%, 0.46);
   --clr-gray-transparent: hsla(0, 0%, 44%, 0.86);
 
   /* Set default variables */
   --slider-padding: 5rem;
   --slider-index: 0;
+  --card-gap: 0.25rem;
+  --items-per-screen: 4;
 }
 
 * {
   font-family: 'Kanit', Arial, Helvetica, sans-serif;
 }
 
+body {
+  background-color: var(--clr-background);
+}
+
+.App-header {
+  text-align: center;
+  margin-bottom: 2.26rem;
+  padding: 12px 0;
+  background-color: var(--clr-gray-transparent);
+  border-bottom: 8px solid var(--clr-card-background);
+}
+
+.App-header h1 {
+  font-size: 600%;
+  color: var(--clr-card-background-hover);
+}
+
 .movie-container {
   display: flex; 
   justify-content: center;
+  margin: 0.86rem 0 2.26rem;
   overflow: hidden;
 }
 
 .slider {
   display: flex;
   flex-grow: 1;
+  /* Adds padding to both sides of the slider */
   width: calc(100% - (2 * var(--slider-padding)));
   /* This is the CORE for our slider function! */
   /* Allows for the slider to move between movie elements! */
@@ -33,14 +55,17 @@
 
 .movie-card {
   display: flex;
-  flex: 0 0 24%;
+  /* Use the `--items-per-screen` value to determine how many items are shown on screen at once */
+  flex: 0 0 calc(100% / var(--items-per-screen));
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-width: 325px;
-  margin: 0px 0.25rem;
+  min-width: 275px;
+  /* Need to use same calculation as above here too */
+  max-width: calc(100% / var(--items-per-screen));
+  margin: 0px var(--card-gap);
   padding: 2rem;
-  border-radius: 8px 36px;
+  border-radius: 8px 36px 16px;
   background-color: var(--clr-card-background);
   transition: 0.26s ease-in-out;
 }
@@ -57,13 +82,19 @@
   box-shadow: 0px 0px 15px;
 }
 
+.movie-card h3 {
+  font-weight: 700;
+  font-size: 125%;
+  padding-bottom: 12px;
+}
+
 .handle {
   border: none;
   flex-grow: 0;
-  width: calc(var(--slider-padding) - 0.25rem);
+  width: calc(var(--slider-padding) - var(--card-gap));
   background-color: var(--clr-light-gray-transparent);
   z-index: 1;
-  margin: 0.25rem 0px;
+  margin: 4.25rem 0px;
   font-size: 6rem;
   text-align: center;
   color: white;
@@ -84,4 +115,35 @@
 .right-handle {
   border-top-left-radius: 24px;
   border-bottom-left-radius: 24px;
+}
+
+.row {
+
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 var(--slider-padding);
+}
+
+.title {
+  font-size: 1.86rem;
+}
+
+.progress-bar {
+  display: flex;
+  gap: 0.26rem;
+}
+
+.progress-item {
+  flex: 0 0 1.5rem;
+  min-width: 1.5rem;
+  height: 0.5rem;
+  border-radius: 2px;
+  background-color: hsla(0, 0%, 100%, 0.5);
+}
+
+.progress-item.active {
+  background-color: hsla(0, 0%, 100%, 0.95);
 }
