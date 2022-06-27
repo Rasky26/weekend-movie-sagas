@@ -17,17 +17,23 @@ function MovieList() {
         dispatch({ type: 'FETCH_MOVIES' });
     }, []);
 
+    const onMovieFocus = (value, index) => {
+        console.log(value, index, "?????")
+    }
+
     return (
         <main>
             <h1>MovieList</h1>
-            <section className="movies-container">
-                {movies.map(movie => 
-                    <MovieCard
-                        key={movie.id}
-                        movie={movie}
-                    />
-                )}
-            </section>
+            <div className='movie-container'>
+                <div className='slider'>
+                    {movies.map(movie => 
+                        <MovieCard
+                            key={movie.id}
+                            movie={movie}
+                        />
+                    )}
+                </div>
+            </div>
         </main>
 
     );
