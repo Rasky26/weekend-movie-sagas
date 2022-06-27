@@ -67,7 +67,16 @@ export default function MovieList({ genre }) {
 
     return (
         <section>
-            <h3>{genre === 'All Movies' ? 'All Movies' : genre}</h3>
+            <div className='header'>
+                <h3 className='title'>{genre === 'All Movies' ? 'All Movies' : genre}</h3>
+                <div className='progress-bar'>
+                    <div className="progress-item"></div>
+                    <div className="progress-item active"></div>
+                    <div className="progress-item"></div>
+                    <div className="progress-item"></div>
+                </div>
+            </div>
+
             <div className='movie-container'>
 
                 <button

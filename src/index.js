@@ -17,6 +17,8 @@ function* rootSaga() {
     yield takeEvery('FETCH_MOVIES', fetchAllMovies)
     // Get a specific movie from the database
     yield takeEvery("GET_MOVIE_DETAILS", fetchMovieDetails)
+    // Get all the genres from the database
+    yield takeEvery("FETCH_GENRES", fetchMovieGenres)
 }
 
 // Function that gets an array of movies from the DB
@@ -42,6 +44,19 @@ function* fetchMovieDetails(action) {
     }
     catch (err) {
         console.log(`Error in the GET one movie route with ${err}`);
+    }
+}
+
+// Function that gets the list of movie genres from the database
+function* fetchMovieGenres() {
+    try {
+        // Get the specific genres from the DB
+        const genres = yield axios.get(`/api/genre`)
+        // Update the STATE with that specific genres
+        yield put({ type: "SET_GENRES", payload: genres.data })
+    }
+    catch (err) {
+        console.log(`Error in the GET genres route with ${err}`);
     }
 }
 
