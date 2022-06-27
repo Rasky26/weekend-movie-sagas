@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const pool = require('../modules/pool')
 
+
+//----------------------------------------------------------------
+// Get the list of movies from the DB, sorted by `title`
 router.get('/', (req, res) => {
 
   const query = `SELECT * FROM movies ORDER BY "title" ASC`;
@@ -16,6 +19,35 @@ router.get('/', (req, res) => {
 
 });
 
+
+//----------------------------------------------------------------
+// Get a specific movie detail from the database
+router.get("/details/:id", (req, res) => {
+
+  // Pull out the ID parameter from the URL
+  const movieId = req.params.id
+
+  // Create the base SQL query
+  const sqlQuery = `
+    SELECT *
+    FROM movies
+    WHERE id = $1
+  `
+
+  // Send the query to PostGres with the URL param
+  pool.query(sqlQuery, [movieId])
+  // Only need to get the singular element that was returned
+  .then(result => res.send(result.rows[0]))
+  .catch(err => {
+    console.log(`ERROR: Get movie with ID: ${movieId}`, err)
+    res.sendStatus(500)
+  })
+})
+
+
+
+//----------------------------------------------------------------
+// Post a new movie to the database
 router.post('/', (req, res) => {
   console.log(req.body);
   // RETURNING "id" will give us back the id of the created movie

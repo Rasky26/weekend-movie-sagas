@@ -13,20 +13,36 @@ import axios from 'axios';
 
 // Create the rootSaga generator function
 function* rootSaga() {
-    yield takeEvery('FETCH_MOVIES', fetchAllMovies);
+    // Get all movies from the database
+    yield takeEvery('FETCH_MOVIES', fetchAllMovies)
+    // Get a specific movie from the database
+    yield takeEvery("GET_MOVIE_DETAILS", fetchMovieDetails)
 }
 
+// Function that gets an array of movies from the DB
 function* fetchAllMovies() {
-    // get all movies from the DB
     try {
+        // Get the list of movies from the DB
         const movies = yield axios.get('/api/movie');
-        console.log('get all:', movies.data);
+        // Update the STATE with the list of movies
         yield put({ type: 'SET_MOVIES', payload: movies.data });
 
-    } catch {
-        console.log('get all error');
+    } catch (err) {
+        console.log(`Error in the GET movie route with ${err}`);
+    }       
+}
+
+// Function that gets a specific movie's detail from the database
+function* fetchMovieDetails(action) {
+    try {
+        // Get the specific movie & details from the DB
+        const movie = yield axios.get(`/api/movie/details/${action.payload.id}`)
+        // Update the STATE with that specific movie
+        yield put({ type: "SET_ONE_MOVIE", payload: movie.data })
     }
-        
+    catch (err) {
+        console.log(`Error in the GET one movie route with ${err}`);
+    }
 }
 
 // Create sagaMiddleware
@@ -39,6 +55,17 @@ const movies = (state = [], action) => {
             return action.payload;
         default:
             return state;
+    }
+}
+
+
+// Used to store the specific movie in STATE
+const movieDetails = (state = {}, action) => {
+    switch (action.type) {
+        case "SET_ONE_MOVIE":
+            return action.payload
+        default:
+            return state
     }
 }
 
@@ -55,7 +82,8 @@ const genres = (state = [], action) => {
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
-        movies,
+        movies,            // Array of movies
+        movieDetails, // One movie's details
         genres,
     }),
     // Add sagaMiddleware to our store
