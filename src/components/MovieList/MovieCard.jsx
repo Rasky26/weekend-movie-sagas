@@ -13,7 +13,7 @@ export default function MovieCard({ movie }) {
     const onClickMovieCard = () => {
         // Navigate to the specific page via the ID in the URL.
         // Movie names 
-        history.push(`/details/${movie.id}/${movie.title.split(" ").join("-")}`)
+        history.push(`/details/${movie.id}`)
     }
 
     // Render out the DOM elements
